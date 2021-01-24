@@ -3,34 +3,6 @@ const getRGBA = function (r = 0, g = 0, b = 0, a = -1) {
 };
 
 /**
- * entitiy
- * 프로퍼티에 draw 함수가 있어야한다.
- *
- */
-const Rectangle = function () {
-    this.x = 0;
-    this.y = 0;
-    this.w = 100;
-    this.h = 100;
-    this.toRight = true;
-};
-Rectangle.prototype.update = function (callback) {
-    this.draw = callback;
-};
-const rect = new Rectangle();
-rect.update(function (ctx, deltaTime, canvasW, canvasH) {
-    ctx.fillStyle = getRGBA();
-    // 방향전환
-    if (this.x < 0) {
-        this.toRight = true;
-    } else if (this.x + this.w > canvasW) {
-        this.toRight = false;
-    }
-    this.x += this.toRight ? deltaTime : -deltaTime;
-    ctx.fillRect(this.x, 100, this.w, this.h);
-});
-
-/**
  *  이걸 생성자함수로 만들어 인스턴스를 반환하고
  *  entities에 entity를 추가하는 방식으로 가기
  *  1. 캔버스 크기를 초기 설정하는 함수
@@ -83,7 +55,6 @@ Stage.prototype.run = function () {
         this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
         this.entities.forEach((obj) => {
             this.ctx.save();
-            console.log(this.canvasW, this.canvasH);
             if (obj) obj.draw(this.ctx, deltaTime, this.canvasW, this.canvasH);
             this.ctx.restore();
         });
@@ -91,10 +62,123 @@ Stage.prototype.run = function () {
     };
     window.requestAnimationFrame(draw);
 };
-Stage.prototype.print2 = function () {
-    console.log('bye');
-};
 
-const stage = new Stage(window.innerWidth, window.innerHeight);
+/**
+ * entitiy
+ * 프로퍼티에 draw 함수가 있어야한다.
+ *
+ */
+const Rectangle = function () {
+    this.x = 100;
+    this.y = 100;
+    this.w = 100;
+    this.h = 100;
+    this.toRight = true;
+    this.toDown = true;
+};
+Rectangle.prototype.update = function (callback) {
+    this.draw = callback;
+};
+const rect = new Rectangle();
+rect.update(function (ctx, deltaTime, canvasW, canvasH) {
+    ctx.fillStyle = getRGBA();
+    // 방향전환
+    if (this.x < 0) {
+        this.toRight = true;
+    } else if (this.x + this.w > canvasW) {
+        this.toRight = false;
+    }
+    this.x += this.toRight ? deltaTime : -deltaTime;
+    if (this.y < 0) {
+        this.toDown = true;
+    } else if (this.y + this.h > canvasH) {
+        this.toDown = false;
+    }
+    this.y += this.toDown ? deltaTime : -deltaTime;
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+});
+
+const Character = function (character) {
+    this.x = 100;
+    this.y = 100;
+    this.w = 0;
+    this.h = 0;
+    this.character = character;
+    this.toRight = true;
+    this.toDown = true;
+};
+Character.prototype.update = function (callback) {
+    this.draw = callback;
+};
+const placeholder = new Character('Try to type something in canvas. 😫');
+placeholder.update(function (ctx, deltaTime, canvasW, canvasH) {
+    ctx.fillStyle = getRGBA(100, 100, 100);
+    ctx.font = '48px serif';
+    const velocity = deltaTime / 4;
+    if (!this.w || !this.h) {
+        const measureText = ctx.measureText(this.character);
+        this.actualBoundingBoxAscent = measureText.actualBoundingBoxAscent;
+        this.actualBoundingBoxDescent = measureText.actualBoundingBoxDescent;
+        this.w = measureText.width;
+    }
+    if (this.x < 0) {
+        // 방향전환
+        this.toRight = true;
+    } else if (this.x + this.w > canvasW) {
+        this.toRight = false;
+    }
+    this.x += this.toRight ? velocity : -velocity;
+    if (this.y - this.actualBoundingBoxAscent < 0) {
+        this.toDown = true;
+    } else if (this.y + this.actualBoundingBoxDescent > canvasH) {
+        this.toDown = false;
+    }
+    this.y += this.toDown ? velocity : -velocity;
+    ctx.fillText(this.character, this.x, this.y);
+    /*
+    ctx.strokeStyle = getRGBA();
+    ctx.strokeRect(
+        this.x,
+        this.y - this.actualBoundingBoxAscent,
+        this.w,
+        this.actualBoundingBoxAscent,
+    );
+    ctx.strokeRect(this.x, this.y, this.w, this.actualBoundingBoxDescent);
+    */
+});
+
+const stage = new Stage(window.innerWidth, window.innerHeight - 100);
 stage.addEntity(rect);
+stage.addEntity(placeholder);
 stage.run();
+
+window.addEventListener('keydown', (event) => {
+    const char = new Character(event.key);
+    char.update(function (ctx, deltaTime, canvasW, canvasH) {
+        ctx.fillStyle = getRGBA(100, 100, 100);
+        ctx.font = '48px serif';
+        const velocity = deltaTime / 4;
+        if (!this.w || !this.h) {
+            const measureText = ctx.measureText(this.character);
+            this.actualBoundingBoxAscent = measureText.actualBoundingBoxAscent;
+            this.actualBoundingBoxDescent =
+                measureText.actualBoundingBoxDescent;
+            this.w = measureText.width;
+        }
+        if (this.x < 0) {
+            // 방향전환
+            this.toRight = true;
+        } else if (this.x + this.w > canvasW) {
+            this.toRight = false;
+        }
+        this.x += this.toRight ? velocity : -velocity;
+        if (this.y - this.actualBoundingBoxAscent < 0) {
+            this.toDown = true;
+        } else if (this.y + this.actualBoundingBoxDescent > canvasH) {
+            this.toDown = false;
+        }
+        this.y += this.toDown ? velocity : -velocity;
+        ctx.fillText(this.character, this.x, this.y);
+    });
+    stage.addEntity(char);
+});

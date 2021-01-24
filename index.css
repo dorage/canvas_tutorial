@@ -3,7 +3,16 @@ body {
     margin: 0;
     overflow: hidden;
 }
-
+#main {
+    display: flex;
+    padding: 30px 50px;
+    margin: 0;
+}
+section {
+    width: 50vw;
+    border: 1px solid;
+    padding: 50px;
+}
 .header {
     height: 50px;
     padding: 25px 0;
