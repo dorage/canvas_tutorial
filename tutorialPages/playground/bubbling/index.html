@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>MDN Canvas Tutorial</title>
+        <link rel="stylesheet" href="../../../index.css"></link>
+        <link rel="stylesheet" href="index.css"></link>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Barber Effect</h1>
+        </div>
+        <ul id="fruits">
+            <li id="apple">APPLE</li>
+            <li id="banana">BANANA</li>
+            <li id="orange">ORANGE</li>
+        </ul>
+        <script>
+            const $fruits = document.getElementById('fruits');
+            const $banana = document.getElementById('banana');
+            
+            $fruits.addEventListener('click',(e)=>{
+                console.log(`${e.eventPhase}`);
+                console.log(`${e.target}`);
+                console.log(`${e.currentTarget}`);
+            });
+            $banana.addEventListener('click',(e)=>{
+                console.log(`${e.eventPhase}`);
+                console.log(`${e.target}`);
+                console.log(`${e.currentTarget}`);});
+            $fruits.addEventListener('click',(e)=>{
+                console.log(`${e.eventPhase}`);
+                console.log(`${e.target}`);
+                console.log(`${e.currentTarget}`);
+            });
+        </script>   
+    </body>
+</html>

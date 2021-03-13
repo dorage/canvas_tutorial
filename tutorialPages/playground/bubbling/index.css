@@ -1,0 +1,23 @@
+.barber-button {
+    width: 500px;
+    height: 300px;
+    margin: 0 auto;
+
+    border: 10px solid;
+    font-weight: 700;
+    font-size: 48px;
+
+    background-image: repeating-linear-gradient(
+        -45deg,
+        white,
+        white 50px,
+        red 50px,
+        red 100px,
+        white 100px,
+        white 150px,
+        blue 150px,
+        blue 200px
+    );
+}
+.barber-button:hover {
+}

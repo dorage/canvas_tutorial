@@ -21,3 +21,50 @@
 }
 .barber-button:hover {
 }
+@keyframes cereal {
+    0% {
+        opacity: 0;
+        color: transparent;
+    }
+    30% {
+    }
+    50% {
+    }
+    60% {
+        opacity: 100%;
+        color: transparent;
+        text-shadow: none;
+    }
+}
+.neumorphism {
+    background-color: rgb(224, 229, 236);
+    width: 100vw;
+    height: 500px;
+    padding-top: 200px;
+
+    color: #444444;
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px;
+}
+.neumorphism > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+
+    background-color: rgb(224, 229, 236);
+    box-shadow: rgba(163, 177, 198, 0.5) 12px 12px 24px 0px,
+        rgb(255, 255, 255) -12px -12px 24px 0px;
+    -webkit-box-shadow: rgba(163, 177, 198, 0.5) 12px 12px 24px 0px,
+        rgb(255, 255, 255) -12px -12px 24px 0px;
+    border-radius: 40px;
+    -webkit-border-radius: 40px;
+
+    animation-duration: 3s;
+    animation-name: cereal;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
