@@ -5,6 +5,12 @@ $window.ondragstart = function () {
 const headers = document.getElementsByClassName('header_title');
 let clicked = false;
 
+document.addEventListener('keydown', function (event) {
+    if (clicked && event.key === 'ESCAPE') {
+        clicked = false;
+        $window.classList.remove('moving');
+    }
+});
 for (const $header of headers) {
     $header.onmousedown = function (event) {
         let shiftX = event.clientX - $window.getBoundingClientRect().left;
@@ -20,11 +26,11 @@ for (const $header of headers) {
             $window.style.top = pageY - shiftY + 'px';
         }
 
-        moveAt(event.pageX, event.pageY);
-
         function onMouseMove(event) {
             moveAt(event.pageX, event.pageY);
         }
+
+        moveAt(event.pageX, event.pageY);
 
         document.addEventListener('mousemove', onMouseMove);
 

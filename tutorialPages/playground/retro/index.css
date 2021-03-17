@@ -1,21 +1,23 @@
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     width: 100vw;
-    height: 100vh;
 
     box-sizing: border-box;
 
     font-family: 'Noto Sans KR', sans-serif;
 
     background-color: #e6d9d0;
+    overflow-y: scroll;
 }
+
+/*
+    window
+*/
 
 .window {
     position: absolute;
-    display: inline-block;
     width: 500px;
     height: 800px;
     padding: 4px;
@@ -101,4 +103,100 @@ body {
 }
 .content-body {
     font-size: 18px;
+}
+
+/*
+    logo
+*/
+.title {
+    padding: 40px;
+}
+.mainlogo {
+    width: 600px;
+}
+
+/*
+    content-grid
+*/
+.contentgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 25px;
+    row-gap: 25px;
+
+    height: 100%;
+    padding: 0 50px;
+    margin-bottom: 100px;
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 250px;
+}
+.post:hover {
+    transform: translate(5px, 5px);
+}
+:root {
+    /* Base font size */
+    font-size: 10px;
+
+    /* Set neon color */
+    --neon-text-color: #f40;
+    --neon-border-color: #08f;
+}
+.signboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    padding: 4px;
+    margin-bottom: 4px;
+
+    border: 4px solid black;
+    background-color: grey;
+
+    font-size: 48px;
+    font-family: 'Black Han Sans', sans-serif;
+}
+.article-header {
+}
+
+/*
+    workbar
+*/
+.workbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    padding: 4px;
+
+    border-top: 4px solid black;
+    background-color: #e6d9d0;
+}
+.process {
+    width: 150px;
+    height: auto;
+    margin-right: 4px;
+    padding: 0 4px;
+
+    border: 2px solid black;
+
+    line-height: 42px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    cursor: pointer;
+}
+.process:active {
+    background-color: grey;
+}
+
+.active {
+    color: white;
+    background-color: black;
 }
